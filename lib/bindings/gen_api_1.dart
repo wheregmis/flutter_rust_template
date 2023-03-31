@@ -16,9 +16,10 @@ import 'package:uuid/uuid.dart';
 import 'gen_api_1.io.dart' if (dart.library.html) 'gen_api_1.web.dart';
 
 abstract class ApiClassOne {
-  Future<int> simpleAdd({required int a, required int b, dynamic hint});
+  Future<bool> authenticate(
+      {required String username, required String password, dynamic hint});
 
-  FlutterRustBridgeTaskConstMeta get kSimpleAddConstMeta;
+  FlutterRustBridgeTaskConstMeta get kAuthenticateConstMeta;
 }
 
 class ApiClassOneImpl implements ApiClassOne {
@@ -30,22 +31,23 @@ class ApiClassOneImpl implements ApiClassOne {
   factory ApiClassOneImpl.wasm(FutureOr<WasmModule> module) =>
       ApiClassOneImpl(module as ExternalLibrary);
   ApiClassOneImpl.raw(this._platform);
-  Future<int> simpleAdd({required int a, required int b, dynamic hint}) {
-    var arg0 = api2wire_i32(a);
-    var arg1 = api2wire_i32(b);
+  Future<bool> authenticate(
+      {required String username, required String password, dynamic hint}) {
+    var arg0 = _platform.api2wire_String(username);
+    var arg1 = _platform.api2wire_String(password);
     return _platform.executeNormal(FlutterRustBridgeTask(
-      callFfi: (port_) => _platform.inner.wire_simple_add(port_, arg0, arg1),
-      parseSuccessData: _wire2api_i32,
-      constMeta: kSimpleAddConstMeta,
-      argValues: [a, b],
+      callFfi: (port_) => _platform.inner.wire_authenticate(port_, arg0, arg1),
+      parseSuccessData: _wire2api_bool,
+      constMeta: kAuthenticateConstMeta,
+      argValues: [username, password],
       hint: hint,
     ));
   }
 
-  FlutterRustBridgeTaskConstMeta get kSimpleAddConstMeta =>
+  FlutterRustBridgeTaskConstMeta get kAuthenticateConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
-        debugName: "simple_add",
-        argNames: ["a", "b"],
+        debugName: "authenticate",
+        argNames: ["username", "password"],
       );
 
   void dispose() {
@@ -53,15 +55,16 @@ class ApiClassOneImpl implements ApiClassOne {
   }
 // Section: wire2api
 
-  int _wire2api_i32(dynamic raw) {
-    return raw as int;
+  bool _wire2api_bool(dynamic raw) {
+    return raw as bool;
   }
 }
 
 // Section: api2wire
 
 @protected
-int api2wire_i32(int raw) {
+int api2wire_u8(int raw) {
   return raw;
 }
+
 // Section: finalizer

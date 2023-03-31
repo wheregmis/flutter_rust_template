@@ -21,21 +21,21 @@ use std::sync::Arc;
 
 // Section: wire functions
 
-fn wire_simple_add_impl(
+fn wire_authenticate_impl(
     port_: MessagePort,
-    a: impl Wire2Api<i32> + UnwindSafe,
-    b: impl Wire2Api<i32> + UnwindSafe,
+    username: impl Wire2Api<String> + UnwindSafe,
+    password: impl Wire2Api<String> + UnwindSafe,
 ) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap(
         WrapInfo {
-            debug_name: "simple_add",
+            debug_name: "authenticate",
             port: Some(port_),
             mode: FfiCallMode::Normal,
         },
         move || {
-            let api_a = a.wire2api();
-            let api_b = b.wire2api();
-            move |task_callback| Ok(simple_add(api_a, api_b))
+            let api_username = username.wire2api();
+            let api_password = password.wire2api();
+            move |task_callback| Ok(authenticate(api_username, api_password))
         },
     )
 }
@@ -61,11 +61,13 @@ where
         (!self.is_null()).then(|| self.wire2api())
     }
 }
-impl Wire2Api<i32> for i32 {
-    fn wire2api(self) -> i32 {
+
+impl Wire2Api<u8> for u8 {
+    fn wire2api(self) -> u8 {
         self
     }
 }
+
 // Section: impl IntoDart
 
 // Section: executor

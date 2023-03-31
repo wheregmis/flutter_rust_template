@@ -20,6 +20,15 @@ class ApiClassOnePlatform extends FlutterRustBridgeBase<ApiClassOneWire>
 
 // Section: api2wire
 
+  @protected
+  String api2wire_String(String raw) {
+    return raw;
+  }
+
+  @protected
+  Uint8List api2wire_uint_8_list(Uint8List raw) {
+    return raw;
+  }
 // Section: finalizer
 }
 
@@ -33,8 +42,8 @@ external ApiClassOneWasmModule get wasmModule;
 class ApiClassOneWasmModule implements WasmModule {
   external Object /* Promise */ call([String? moduleName]);
   external ApiClassOneWasmModule bind(dynamic thisArg, String moduleName);
-  external dynamic /* void */ wire_simple_add(
-      NativePortType port_, int a, int b);
+  external dynamic /* void */ wire_authenticate(
+      NativePortType port_, String username, String password);
 }
 
 // Section: WASM wire connector
@@ -44,6 +53,7 @@ class ApiClassOneWire
   ApiClassOneWire(FutureOr<WasmModule> module)
       : super(WasmModule.cast<ApiClassOneWasmModule>(module));
 
-  void wire_simple_add(NativePortType port_, int a, int b) =>
-      wasmModule.wire_simple_add(port_, a, b);
+  void wire_authenticate(
+          NativePortType port_, String username, String password) =>
+      wasmModule.wire_authenticate(port_, username, password);
 }
