@@ -1,0 +1,1 @@
+dart run flutter_rust_bridge:serve
