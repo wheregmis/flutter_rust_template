@@ -44,6 +44,9 @@ class ApiClassOneWasmModule implements WasmModule {
   external ApiClassOneWasmModule bind(dynamic thisArg, String moduleName);
   external dynamic /* void */ wire_authenticate(
       NativePortType port_, String username, String password);
+
+  external dynamic /* void */ wire_get_gf_name(
+      NativePortType port_, String name);
 }
 
 // Section: WASM wire connector
@@ -56,4 +59,7 @@ class ApiClassOneWire
   void wire_authenticate(
           NativePortType port_, String username, String password) =>
       wasmModule.wire_authenticate(port_, username, password);
+
+  void wire_get_gf_name(NativePortType port_, String name) =>
+      wasmModule.wire_get_gf_name(port_, name);
 }

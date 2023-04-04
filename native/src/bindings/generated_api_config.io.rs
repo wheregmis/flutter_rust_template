@@ -2,8 +2,13 @@ use super::*;
 // Section: wire functions
 
 #[no_mangle]
-pub extern "C" fn wire_simple_minus(port_: i64, a: i32, b: i32) {
-    wire_simple_minus_impl(port_, a, b)
+pub extern "C" fn wire_platform(port_: i64) {
+    wire_platform_impl(port_)
+}
+
+#[no_mangle]
+pub extern "C" fn wire_rust_release_mode(port_: i64) {
+    wire_rust_release_mode_impl(port_)
 }
 
 // Section: allocate functions

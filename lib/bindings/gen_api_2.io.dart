@@ -47,6 +47,20 @@ class ApiClassTwoWire implements FlutterRustBridgeWireBase {
           lookup)
       : _lookup = lookup;
 
+  void free_WireSyncReturn(
+    WireSyncReturn ptr,
+  ) {
+    return _free_WireSyncReturn(
+      ptr,
+    );
+  }
+
+  late final _free_WireSyncReturnPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(WireSyncReturn)>>(
+          'free_WireSyncReturn');
+  late final _free_WireSyncReturn =
+      _free_WireSyncReturnPtr.asFunction<void Function(WireSyncReturn)>();
+
   void store_dart_post_cobject(
     DartPostCObjectFnType ptr,
   ) {
@@ -135,20 +149,6 @@ class ApiClassTwoWire implements FlutterRustBridgeWireBase {
               ffi.Int64, ffi.Int32, ffi.Int32)>>('wire_simple_minus');
   late final _wire_simple_minus =
       _wire_simple_minusPtr.asFunction<void Function(int, int, int)>();
-
-  void free_WireSyncReturn(
-    WireSyncReturn ptr,
-  ) {
-    return _free_WireSyncReturn(
-      ptr,
-    );
-  }
-
-  late final _free_WireSyncReturnPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(WireSyncReturn)>>(
-          'free_WireSyncReturn');
-  late final _free_WireSyncReturn =
-      _free_WireSyncReturnPtr.asFunction<void Function(WireSyncReturn)>();
 }
 
 class _Dart_Handle extends ffi.Opaque {}

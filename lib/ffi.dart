@@ -5,7 +5,7 @@ import 'dart:ffi';
 import 'dart:io' as io;
 
 import 'package:flutter_rust_bridge_template/bindings/gen_api_1.dart';
-import 'package:flutter_rust_bridge_template/bindings/gen_api_2.dart';
+import 'package:flutter_rust_bridge_template/bindings/gen_api_config.dart';
 
 const _base = 'native';
 
@@ -18,7 +18,7 @@ final ApiClassOne api1 = ApiClassOneImpl(
         ? DynamicLibrary.executable()
         : DynamicLibrary.open(_dylib));
 
-final ApiClassTwo api2 = ApiClassTwoImpl(
+final ApiConfig enableRustBindings = ApiConfigImpl(
     io.Platform.isIOS || io.Platform.isMacOS
         ? DynamicLibrary.executable()
         : DynamicLibrary.open(_dylib));

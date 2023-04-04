@@ -6,6 +6,11 @@ pub fn wire_authenticate(port_: MessagePort, username: String, password: String)
     wire_authenticate_impl(port_, username, password)
 }
 
+#[wasm_bindgen]
+pub fn wire_get_gf_name(port_: MessagePort, name: String) {
+    wire_get_gf_name_impl(port_, name)
+}
+
 // Section: allocate functions
 
 // Section: related functions

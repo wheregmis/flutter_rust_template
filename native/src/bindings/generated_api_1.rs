@@ -39,6 +39,19 @@ fn wire_authenticate_impl(
         },
     )
 }
+fn wire_get_gf_name_impl(port_: MessagePort, name: impl Wire2Api<String> + UnwindSafe) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap(
+        WrapInfo {
+            debug_name: "get_gf_name",
+            port: Some(port_),
+            mode: FfiCallMode::Normal,
+        },
+        move || {
+            let api_name = name.wire2api();
+            move |task_callback| Ok(get_gf_name(api_name))
+        },
+    )
+}
 // Section: wrapper structs
 
 // Section: static checks

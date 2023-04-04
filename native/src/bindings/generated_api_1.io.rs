@@ -10,6 +10,11 @@ pub extern "C" fn wire_authenticate(
     wire_authenticate_impl(port_, username, password)
 }
 
+#[no_mangle]
+pub extern "C" fn wire_get_gf_name(port_: i64, name: *mut wire_uint_8_list) {
+    wire_get_gf_name_impl(port_, name)
+}
+
 // Section: allocate functions
 
 #[no_mangle]

@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'bindings/bridge_definitions.dart';
 import 'ffi.dart' if (dart.library.html) 'ffi_web.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late Future<bool> isRelease;
+  @override
+  void initState() {
+    super.initState();
+    isRelease = enableRustBindings.rustReleaseMode();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -51,11 +63,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // These futures belong to the state and are only initialized once,
   // in the initState method.
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,32 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
             FutureBuilder(
               // We await two unrelated futures here, so the type has to be
               // List<dynamic>.
-              future: api1.authenticate(username: "admin", password: "test"),
-              builder: (context, snap) {
-                final style = Theme.of(context).textTheme.headline4;
-                if (snap.error != null) {
-                  // An error has been encountered, so give an appropriate response and
-                  // pass the error details to an unobstructive tooltip.
-                  debugPrint(snap.error.toString());
-                  return Tooltip(
-                    message: snap.error.toString(),
-                    child: Text('Unknown OS', style: style),
-                  );
-                }
-
-                // Guard return here, the data is not ready yet.
-                final data = snap.data;
-                if (data == null) return const CircularProgressIndicator();
-
-                // Finally, retrieve the data expected in the same order provided
-                // to the FutureBuilder.future.
-                return Text(data.toString(), style: style);
-              },
-            ),
-            FutureBuilder(
-              // We await two unrelated futures here, so the type has to be
-              // List<dynamic>.
-              future: api2.simpleMinus(a: 10, b: 2),
+              future: api1.getGfName(name: "admin"),
               builder: (context, snap) {
                 final style = Theme.of(context).textTheme.headline4;
                 if (snap.error != null) {

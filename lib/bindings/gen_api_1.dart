@@ -20,6 +20,10 @@ abstract class ApiClassOne {
       {required String username, required String password, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kAuthenticateConstMeta;
+
+  Future<String> getGfName({required String name, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kGetGfNameConstMeta;
 }
 
 class ApiClassOneImpl implements ApiClassOne {
@@ -50,13 +54,42 @@ class ApiClassOneImpl implements ApiClassOne {
         argNames: ["username", "password"],
       );
 
+  Future<String> getGfName({required String name, dynamic hint}) {
+    var arg0 = _platform.api2wire_String(name);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner.wire_get_gf_name(port_, arg0),
+      parseSuccessData: _wire2api_String,
+      constMeta: kGetGfNameConstMeta,
+      argValues: [name],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kGetGfNameConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "get_gf_name",
+        argNames: ["name"],
+      );
+
   void dispose() {
     _platform.dispose();
   }
 // Section: wire2api
 
+  String _wire2api_String(dynamic raw) {
+    return raw as String;
+  }
+
   bool _wire2api_bool(dynamic raw) {
     return raw as bool;
+  }
+
+  int _wire2api_u8(dynamic raw) {
+    return raw as int;
+  }
+
+  Uint8List _wire2api_uint_8_list(dynamic raw) {
+    return raw as Uint8List;
   }
 }
 

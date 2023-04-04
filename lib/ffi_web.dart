@@ -3,7 +3,7 @@
 
 import 'package:flutter_rust_bridge/flutter_rust_bridge.dart';
 import 'package:flutter_rust_bridge_template/bindings/gen_api_1.dart';
-import 'package:flutter_rust_bridge_template/bindings/gen_api_2.dart';
+import 'package:flutter_rust_bridge_template/bindings/gen_api_config.dart';
 
 const root = 'pkg/native';
 
@@ -11,6 +11,6 @@ final api1 = ApiClassOneImpl.wasm(
   WasmModule.initialize(kind: const Modules.noModules(root: root)),
 );
 
-final api2 = ApiClassTwoImpl.wasm(
+final enableRustBindings = ApiConfigImpl.wasm(
   WasmModule.initialize(kind: const Modules.noModules(root: root)),
 );
