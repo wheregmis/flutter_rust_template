@@ -1,6 +1,8 @@
  #![allow(unused_variables)]
 
 
+ // ###### *! IMPORTANT Do not delete this file!* ######
+
 pub enum Platform {
     Unknown,
     Android,

@@ -13,47 +13,24 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge.dart';
 import 'package:uuid/uuid.dart';
-import 'gen_api_1.io.dart' if (dart.library.html) 'gen_api_1.web.dart';
+import 'gen_api_authentication.io.dart'
+    if (dart.library.html) 'gen_api_authentication.web.dart';
 
-abstract class ApiClassOne {
-  Future<bool> authenticate(
-      {required String username, required String password, dynamic hint});
-
-  FlutterRustBridgeTaskConstMeta get kAuthenticateConstMeta;
-
+abstract class Authentication {
   Future<String> getGfName({required String name, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kGetGfNameConstMeta;
 }
 
-class ApiClassOneImpl implements ApiClassOne {
-  final ApiClassOnePlatform _platform;
-  factory ApiClassOneImpl(ExternalLibrary dylib) =>
-      ApiClassOneImpl.raw(ApiClassOnePlatform(dylib));
+class AuthenticationImpl implements Authentication {
+  final AuthenticationPlatform _platform;
+  factory AuthenticationImpl(ExternalLibrary dylib) =>
+      AuthenticationImpl.raw(AuthenticationPlatform(dylib));
 
   /// Only valid on web/WASM platforms.
-  factory ApiClassOneImpl.wasm(FutureOr<WasmModule> module) =>
-      ApiClassOneImpl(module as ExternalLibrary);
-  ApiClassOneImpl.raw(this._platform);
-  Future<bool> authenticate(
-      {required String username, required String password, dynamic hint}) {
-    var arg0 = _platform.api2wire_String(username);
-    var arg1 = _platform.api2wire_String(password);
-    return _platform.executeNormal(FlutterRustBridgeTask(
-      callFfi: (port_) => _platform.inner.wire_authenticate(port_, arg0, arg1),
-      parseSuccessData: _wire2api_bool,
-      constMeta: kAuthenticateConstMeta,
-      argValues: [username, password],
-      hint: hint,
-    ));
-  }
-
-  FlutterRustBridgeTaskConstMeta get kAuthenticateConstMeta =>
-      const FlutterRustBridgeTaskConstMeta(
-        debugName: "authenticate",
-        argNames: ["username", "password"],
-      );
-
+  factory AuthenticationImpl.wasm(FutureOr<WasmModule> module) =>
+      AuthenticationImpl(module as ExternalLibrary);
+  AuthenticationImpl.raw(this._platform);
   Future<String> getGfName({required String name, dynamic hint}) {
     var arg0 = _platform.api2wire_String(name);
     return _platform.executeNormal(FlutterRustBridgeTask(
@@ -78,10 +55,6 @@ class ApiClassOneImpl implements ApiClassOne {
 
   String _wire2api_String(dynamic raw) {
     return raw as String;
-  }
-
-  bool _wire2api_bool(dynamic raw) {
-    return raw as bool;
   }
 
   int _wire2api_u8(dynamic raw) {

@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
             FutureBuilder(
               // We await two unrelated futures here, so the type has to be
               // List<dynamic>.
-              future: api1.getGfName(name: "admin"),
+              future: apiAuthentication.getGfName(name: "admin"),
               builder: (context, snap) {
                 final style = Theme.of(context).textTheme.headline4;
                 if (snap.error != null) {

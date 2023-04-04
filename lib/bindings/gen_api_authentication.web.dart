@@ -7,13 +7,13 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge.dart';
 import 'package:uuid/uuid.dart';
-import 'gen_api_1.dart';
-export 'gen_api_1.dart';
+import 'gen_api_authentication.dart';
+export 'gen_api_authentication.dart';
 
-class ApiClassOnePlatform extends FlutterRustBridgeBase<ApiClassOneWire>
+class AuthenticationPlatform extends FlutterRustBridgeBase<AuthenticationWire>
     with FlutterRustBridgeSetupMixin {
-  ApiClassOnePlatform(FutureOr<WasmModule> dylib)
-      : super(ApiClassOneWire(dylib)) {
+  AuthenticationPlatform(FutureOr<WasmModule> dylib)
+      : super(AuthenticationWire(dylib)) {
     setupMixinConstructor();
   }
   Future<void> setup() => inner.init;
@@ -35,30 +35,23 @@ class ApiClassOnePlatform extends FlutterRustBridgeBase<ApiClassOneWire>
 // Section: WASM wire module
 
 @JS('wasm_bindgen')
-external ApiClassOneWasmModule get wasmModule;
+external AuthenticationWasmModule get wasmModule;
 
 @JS()
 @anonymous
-class ApiClassOneWasmModule implements WasmModule {
+class AuthenticationWasmModule implements WasmModule {
   external Object /* Promise */ call([String? moduleName]);
-  external ApiClassOneWasmModule bind(dynamic thisArg, String moduleName);
-  external dynamic /* void */ wire_authenticate(
-      NativePortType port_, String username, String password);
-
+  external AuthenticationWasmModule bind(dynamic thisArg, String moduleName);
   external dynamic /* void */ wire_get_gf_name(
       NativePortType port_, String name);
 }
 
 // Section: WASM wire connector
 
-class ApiClassOneWire
-    extends FlutterRustBridgeWasmWireBase<ApiClassOneWasmModule> {
-  ApiClassOneWire(FutureOr<WasmModule> module)
-      : super(WasmModule.cast<ApiClassOneWasmModule>(module));
-
-  void wire_authenticate(
-          NativePortType port_, String username, String password) =>
-      wasmModule.wire_authenticate(port_, username, password);
+class AuthenticationWire
+    extends FlutterRustBridgeWasmWireBase<AuthenticationWasmModule> {
+  AuthenticationWire(FutureOr<WasmModule> module)
+      : super(WasmModule.cast<AuthenticationWasmModule>(module));
 
   void wire_get_gf_name(NativePortType port_, String name) =>
       wasmModule.wire_get_gf_name(port_, name);
