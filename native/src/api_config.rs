@@ -50,6 +50,7 @@ pub fn platform() -> Platform {
     }
 }
 
+
 pub fn rust_release_mode() -> bool {
     cfg!(not(debug_assertions))
 }

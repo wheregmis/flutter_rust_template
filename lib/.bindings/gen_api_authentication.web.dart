@@ -10,49 +10,45 @@ import 'package:uuid/uuid.dart';
 import 'gen_api_authentication.dart';
 export 'gen_api_authentication.dart';
 
-class AuthenticationPlatform extends FlutterRustBridgeBase<AuthenticationWire>
+class ApiAuthenticationPlatform
+    extends FlutterRustBridgeBase<ApiAuthenticationWire>
     with FlutterRustBridgeSetupMixin {
-  AuthenticationPlatform(FutureOr<WasmModule> dylib)
-      : super(AuthenticationWire(dylib)) {
+  ApiAuthenticationPlatform(FutureOr<WasmModule> dylib)
+      : super(ApiAuthenticationWire(dylib)) {
     setupMixinConstructor();
   }
   Future<void> setup() => inner.init;
 
 // Section: api2wire
 
-  @protected
-  String api2wire_String(String raw) {
-    return raw;
-  }
-
-  @protected
-  Uint8List api2wire_uint_8_list(Uint8List raw) {
-    return raw;
-  }
 // Section: finalizer
 }
 
 // Section: WASM wire module
 
 @JS('wasm_bindgen')
-external AuthenticationWasmModule get wasmModule;
+external ApiAuthenticationWasmModule get wasmModule;
 
 @JS()
 @anonymous
-class AuthenticationWasmModule implements WasmModule {
+class ApiAuthenticationWasmModule implements WasmModule {
   external Object /* Promise */ call([String? moduleName]);
-  external AuthenticationWasmModule bind(dynamic thisArg, String moduleName);
-  external dynamic /* void */ wire_get_gf_name(
-      NativePortType port_, String name);
+  external ApiAuthenticationWasmModule bind(dynamic thisArg, String moduleName);
+  external dynamic /* void */ wire_divide(NativePortType port_, int a, int b);
+
+  external dynamic /* void */ wire_multiply(NativePortType port_, int a, int b);
 }
 
 // Section: WASM wire connector
 
-class AuthenticationWire
-    extends FlutterRustBridgeWasmWireBase<AuthenticationWasmModule> {
-  AuthenticationWire(FutureOr<WasmModule> module)
-      : super(WasmModule.cast<AuthenticationWasmModule>(module));
+class ApiAuthenticationWire
+    extends FlutterRustBridgeWasmWireBase<ApiAuthenticationWasmModule> {
+  ApiAuthenticationWire(FutureOr<WasmModule> module)
+      : super(WasmModule.cast<ApiAuthenticationWasmModule>(module));
 
-  void wire_get_gf_name(NativePortType port_, String name) =>
-      wasmModule.wire_get_gf_name(port_, name);
+  void wire_divide(NativePortType port_, int a, int b) =>
+      wasmModule.wire_divide(port_, a, b);
+
+  void wire_multiply(NativePortType port_, int a, int b) =>
+      wasmModule.wire_multiply(port_, a, b);
 }

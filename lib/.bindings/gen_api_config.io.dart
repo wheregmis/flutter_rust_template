@@ -47,20 +47,6 @@ class ApiConfigWire implements FlutterRustBridgeWireBase {
           lookup)
       : _lookup = lookup;
 
-  void free_WireSyncReturn(
-    WireSyncReturn ptr,
-  ) {
-    return _free_WireSyncReturn(
-      ptr,
-    );
-  }
-
-  late final _free_WireSyncReturnPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(WireSyncReturn)>>(
-          'free_WireSyncReturn');
-  late final _free_WireSyncReturn =
-      _free_WireSyncReturnPtr.asFunction<void Function(WireSyncReturn)>();
-
   void store_dart_post_cobject(
     DartPostCObjectFnType ptr,
   ) {
@@ -158,6 +144,20 @@ class ApiConfigWire implements FlutterRustBridgeWireBase {
           'wire_rust_release_mode');
   late final _wire_rust_release_mode =
       _wire_rust_release_modePtr.asFunction<void Function(int)>();
+
+  void free_WireSyncReturn(
+    WireSyncReturn ptr,
+  ) {
+    return _free_WireSyncReturn(
+      ptr,
+    );
+  }
+
+  late final _free_WireSyncReturnPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(WireSyncReturn)>>(
+          'free_WireSyncReturn');
+  late final _free_WireSyncReturn =
+      _free_WireSyncReturnPtr.asFunction<void Function(WireSyncReturn)>();
 }
 
 class _Dart_Handle extends ffi.Opaque {}

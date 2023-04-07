@@ -3,9 +3,8 @@
 
 import 'dart:ffi';
 import 'dart:io' as io;
-
-import 'package:flutter_rust_bridge_template/bindings/gen_api_authentication.dart';
-import 'package:flutter_rust_bridge_template/bindings/gen_api_config.dart';
+import 'package:flutter_rust_bridge_template/.bindings/gen_api_authentication.dart';
+import 'package:flutter_rust_bridge_template/.bindings/gen_api_config.dart';
 
 const _base = 'native';
 
@@ -13,7 +12,7 @@ const _base = 'native';
 // but rather directly **linked** against the binary.
 final _dylib = io.Platform.isWindows ? '$_base.dll' : 'lib$_base.so';
 
-final Authentication apiAuthentication = AuthenticationImpl(
+final ApiAuthentication apiAuthentication = ApiAuthenticationImpl(
     io.Platform.isIOS || io.Platform.isMacOS
         ? DynamicLibrary.executable()
         : DynamicLibrary.open(_dylib));

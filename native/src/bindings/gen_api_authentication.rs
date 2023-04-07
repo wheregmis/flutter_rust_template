@@ -21,16 +21,39 @@ use std::sync::Arc;
 
 // Section: wire functions
 
-fn wire_get_gf_name_impl(port_: MessagePort, name: impl Wire2Api<String> + UnwindSafe) {
+fn wire_divide_impl(
+    port_: MessagePort,
+    a: impl Wire2Api<i32> + UnwindSafe,
+    b: impl Wire2Api<i32> + UnwindSafe,
+) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap(
         WrapInfo {
-            debug_name: "get_gf_name",
+            debug_name: "divide",
             port: Some(port_),
             mode: FfiCallMode::Normal,
         },
         move || {
-            let api_name = name.wire2api();
-            move |task_callback| Ok(get_gf_name(api_name))
+            let api_a = a.wire2api();
+            let api_b = b.wire2api();
+            move |task_callback| Ok(divide(api_a, api_b))
+        },
+    )
+}
+fn wire_multiply_impl(
+    port_: MessagePort,
+    a: impl Wire2Api<i32> + UnwindSafe,
+    b: impl Wire2Api<i32> + UnwindSafe,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap(
+        WrapInfo {
+            debug_name: "multiply",
+            port: Some(port_),
+            mode: FfiCallMode::Normal,
+        },
+        move || {
+            let api_a = a.wire2api();
+            let api_b = b.wire2api();
+            move |task_callback| Ok(multiply(api_a, api_b))
         },
     )
 }
@@ -56,13 +79,11 @@ where
         (!self.is_null()).then(|| self.wire2api())
     }
 }
-
-impl Wire2Api<u8> for u8 {
-    fn wire2api(self) -> u8 {
+impl Wire2Api<i32> for i32 {
+    fn wire2api(self) -> i32 {
         self
     }
 }
-
 // Section: impl IntoDart
 
 // Section: executor
@@ -73,13 +94,13 @@ support::lazy_static! {
 
 /// cbindgen:ignore
 #[cfg(target_family = "wasm")]
-#[path = "generated_api_authentication.web.rs"]
+#[path = "gen_api_authentication.web.rs"]
 mod web;
 #[cfg(target_family = "wasm")]
 pub use web::*;
 
 #[cfg(not(target_family = "wasm"))]
-#[path = "generated_api_authentication.io.rs"]
+#[path = "gen_api_authentication.io.rs"]
 mod io;
 #[cfg(not(target_family = "wasm"))]
 pub use io::*;
