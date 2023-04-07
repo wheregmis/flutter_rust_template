@@ -9,17 +9,19 @@ fi
 # Replace 'your_binding_script.sh' with the actual name of your binding script
 binding_script="./generate.sh"
 
-# Find specific files to watch and create a regex pattern
-files_to_watch=$(find native/src -type f -name '*.rs' ! -path '*/bindings/*' ! -name 'lib.rs' | sed 's/native\/src\///' | paste -sd'|' -)
+
+# Find specific files to watch and create a string with --watch flags
+files_to_watch=$(find native/src -type f -name '*.rs' ! -path '*/bindings/*' ! -name 'lib.rs' -exec echo -n '-w {} ' \;)
 
 # Create the watchexec command
-watchexec_cmd="watchexec -w native/src -e rs -i native/src/lib.rs -i '*/bindings/*' -- $binding_script"
+watchexec_cmd="watchexec -r -e rs $files_to_watch -- $binding_script"
 
+# Remove extra spaces in the watchexec command
+watchexec_cmd_clean=$(echo "$watchexec_cmd" | tr -s ' ')
 
-# Print the watchexec command
-echo "Generated watchexec command: $watchexec_cmd"
+# Print the clean watchexec command
+echo "Generated watchexec command: $watchexec_cmd_clean"
 
-# # Run the watchexec command
-eval "$watchexec_cmd"
-
+# Run the clean watchexec command
+eval "$watchexec_cmd_clean"
 

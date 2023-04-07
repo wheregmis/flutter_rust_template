@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
             FutureBuilder(
               // We await two unrelated futures here, so the type has to be
               // List<dynamic>.
-              future: apiAuthentication.multiply(a: 20, b: 5),
+              future: apiAuthentication.divide(a: 20, b: 5),
               builder: (context, snap) {
                 final style = Theme.of(context).textTheme.headline4;
                 if (snap.error != null) {

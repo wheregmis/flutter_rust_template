@@ -173,5 +173,6 @@ class ApiAuthenticationWire implements FlutterRustBridgeWireBase {
 class _Dart_Handle extends ffi.Opaque {}
 
 typedef DartPostCObjectFnType = ffi.Pointer<
-    ffi.NativeFunction<ffi.Bool Function(DartPort, ffi.Pointer<ffi.Void>)>>;
+    ffi.NativeFunction<
+        ffi.Bool Function(DartPort port_id, ffi.Pointer<ffi.Void> message)>>;
 typedef DartPort = ffi.Int64;
