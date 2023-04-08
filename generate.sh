@@ -1,4 +1,4 @@
-
+#!/bin/bash
 RUST_INPUT="$(find native/src -type f -name '*.rs' ! -path '*/bindings/*' ! -name 'lib.rs' | \
 sed 's/"/\\"/g' | \
 awk '{printf "\"%s\" ", $0}')"
@@ -47,7 +47,7 @@ eval "$COMMAND"
 
 # removing the first two lines of lib.rs inside of native/src
 sed -n '2,/^mod bindings;/p' native/src/lib.rs > native/src/bindings/mod.rs
-#!/bin/bash
+
 
 # Replace 'source_rust_file.rs' with the actual name of the Rust file containing the lines to copy
 source_rust_file="native/src/lib.rs"

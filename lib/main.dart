@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '.bindings/bridge_definitions.dart';
 import 'ffi.dart' if (dart.library.html) 'ffi_web.dart';
 
 void main() {
